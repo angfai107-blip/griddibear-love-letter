@@ -1,1 +1,878 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>for my griddibear 🧸</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        html {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+
+            /* RED + LAVENDER BACKGROUND */
+            background: linear-gradient(
+                135deg,
+                #8B1E3F,
+                #A64D79,
+                #BFA2DB
+            );
+
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            padding: 35px 15px 60px;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+
+            margin: 0 auto;
+
+            text-align: center;
+        }
+
+
+        h1 {
+            color: white;
+
+            font-size: 38px;
+
+            margin-bottom: 40px;
+
+            line-height: 1.2;
+
+            text-shadow:
+                0 3px 8px rgba(80, 20, 50, 0.35);
+        }
+
+
+        /* =========================
+           ENVELOPE
+        ========================= */
+
+        .envelope {
+            position: relative;
+
+            width: min(360px, 92vw);
+            height: min(240px, 61.3vw);
+
+            max-height: 240px;
+
+            margin: 0 auto;
+
+            cursor: pointer;
+
+            perspective: 1000px;
+        }
+
+
+        /* =========================
+           ENVELOPE BODY
+        ========================= */
+
+        .envelope-body {
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+
+            /* LIGHT LAVENDER */
+            background: #F5EEFF;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 10px 30px rgba(70, 20, 60, 0.3);
+
+            z-index: 2;
+        }
+
+
+        /* =========================
+           LETTER
+        ========================= */
+
+        .letter {
+            position: absolute;
+
+            width: 92%;
+
+            min-height: 210px;
+
+            left: 4%;
+
+            top: 20px;
+
+            /* SOFT LAVENDER PAPER */
+            background: #FFF9FC;
+
+            padding: 25px;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 5px 20px rgba(80, 30, 70, 0.2);
+
+            z-index: 1;
+
+            transition:
+                transform 0.9s ease;
+
+            text-align: left;
+
+            overflow: hidden;
+        }
+
+
+        .letter h2 {
+            /* DEEP RED */
+            color: #9B1C45;
+
+            font-size: 26px;
+
+            text-align: center;
+
+            margin-bottom: 18px;
+
+            line-height: 1.2;
+        }
+
+
+        .letter p {
+            /* DARK PURPLE */
+            color: #3F3045;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            margin-bottom: 12px;
+
+            overflow-wrap: break-word;
+        }
+
+
+        /* =========================
+           ENVELOPE FLAP
+        ========================= */
+
+        .flap {
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+
+            /* RED */
+            background: #A51C45;
+
+            clip-path: polygon(
+                0 0,
+                100% 0,
+                50% 55%
+            );
+
+            transform-origin: top;
+
+            transition:
+                transform 0.8s ease;
+
+            z-index: 4;
+        }
+
+
+        /* =========================
+           HEART
+        ========================= */
+
+        .heart {
+            position: absolute;
+
+            z-index: 5;
+
+            top: 90px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            font-size: 55px;
+
+            transition: 0.5s;
+
+            filter:
+                drop-shadow(
+                    0 3px 5px
+                    rgba(70, 20, 50, 0.25)
+                );
+        }
+
+
+        /* =========================
+           OPEN ENVELOPE
+        ========================= */
+
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+
+
+        .envelope.open .letter {
+            transform: translateY(-115px);
+
+            z-index: 6;
+        }
+
+
+        .envelope.open .heart {
+            opacity: 0;
+        }
+
+
+        /* =========================
+           INSTRUCTION
+        ========================= */
+
+        .instruction {
+            color: #FFF4FA;
+
+            margin-top: 35px;
+
+            font-size: 17px;
+
+            line-height: 1.4;
+
+            text-shadow:
+                0 2px 5px rgba(70, 20, 50, 0.25);
+        }
+
+
+        /* =========================
+           QUESTION
+        ========================= */
+
+        .question {
+            display: none;
+
+            width: 100%;
+
+            max-width: 500px;
+
+            margin: 45px auto 20px;
+
+            /* LIGHT LAVENDER */
+            background: rgba(250, 244, 255, 0.97);
+
+            padding: 30px 20px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(70, 20, 60, 0.3);
+
+            border:
+                2px solid rgba(166, 77, 121, 0.2);
+        }
+
+
+        .question h2 {
+            /* DEEP RED */
+            color: #9B1C45;
+
+            font-size: 25px;
+
+            margin-bottom: 25px;
+
+            line-height: 1.3;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        button {
+            border: none;
+
+            padding: 13px 28px;
+
+            min-width: 100px;
+
+            border-radius: 25px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            margin: 5px;
+
+            transition: 0.2s;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* YES BUTTON */
+
+        #yes {
+            /* RED */
+            background: #A51C45;
+
+            color: white;
+
+            box-shadow:
+                0 4px 10px
+                rgba(120, 20, 55, 0.25);
+        }
+
+
+        #yes:hover {
+            background: #7F1636;
+
+            transform: scale(1.05);
+        }
+
+
+        /* NO BUTTON */
+
+        #no {
+            /* LAVENDER */
+            background: #D8C4E8;
+
+            color: #4B3555;
+
+            position: relative;
+        }
+
+
+        #no:hover {
+            background: #C9AFDF;
+        }
+
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        #message {
+            margin-top: 20px;
+
+            /* RED */
+            color: #A51C45;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            line-height: 1.4;
+        }
+
+
+        /* =========================
+           FLOATING HEARTS
+        ========================= */
+
+        .floating-heart {
+            position: fixed;
+
+            bottom: -30px;
+
+            font-size: 25px;
+
+            animation:
+                floatUp 5s linear infinite;
+
+            pointer-events: none;
+
+            z-index: 100;
+        }
+
+
+        @keyframes floatUp {
+
+            0% {
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translateY(-110vh)
+                    rotate(360deg);
+
+                opacity: 0;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE PHONES
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            body {
+                padding:
+                    25px 12px 50px;
+            }
+
+
+            h1 {
+                font-size: 28px;
+
+                margin-bottom: 35px;
+            }
+
+
+            .envelope {
+                width: 92vw;
+
+                height: calc(92vw * 0.667);
+
+                max-height: none;
+            }
+
+
+            .letter {
+                width: 94%;
+
+                left: 3%;
+
+                min-height: 175px;
+
+                padding: 18px;
+            }
+
+
+            .letter h2 {
+                font-size: 21px;
+
+                margin-bottom: 12px;
+            }
+
+
+            .letter p {
+                font-size: 14px;
+
+                line-height: 1.5;
+
+                margin-bottom: 9px;
+            }
+
+
+            .envelope.open .letter {
+                transform:
+                    translateY(-85px);
+            }
+
+
+            .heart {
+                top: 35%;
+
+                font-size: 48px;
+            }
+
+
+            .instruction {
+                margin-top: 30px;
+
+                font-size: 15px;
+            }
+
+
+            .question {
+                margin-top: 35px;
+
+                padding: 25px 12px;
+
+                border-radius: 18px;
+            }
+
+
+            .question h2 {
+                font-size: 21px;
+
+                margin-bottom: 20px;
+            }
+
+
+            button {
+                padding: 13px 22px;
+
+                font-size: 15px;
+
+                min-width: 105px;
+            }
+
+
+            #message {
+                font-size: 18px;
+            }
+
+        }
+
+
+        /* =========================
+           VERY SMALL PHONES
+        ========================= */
+
+        @media (max-width: 360px) {
+
+            body {
+                padding:
+                    20px 8px 45px;
+            }
+
+
+            h1 {
+                font-size: 24px;
+
+                margin-bottom: 30px;
+            }
+
+
+            .envelope {
+                width: 94vw;
+
+                height: calc(94vw * 0.667);
+            }
+
+
+            .letter {
+                padding: 14px;
+            }
+
+
+            .letter h2 {
+                font-size: 18px;
+            }
+
+
+            .letter p {
+                font-size: 13px;
+
+                line-height: 1.4;
+            }
+
+
+            .envelope.open .letter {
+                transform:
+                    translateY(-75px);
+            }
+
+
+            .heart {
+                font-size: 42px;
+            }
+
+
+            .instruction {
+                font-size: 14px;
+            }
+
+
+            .question h2 {
+                font-size: 19px;
+            }
+
+
+            button {
+                padding: 12px 18px;
+
+                font-size: 14px;
+
+                min-width: 95px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <h1>
+            para sakong pampiyampiyamkin
+        </h1>
+
+
+        <!-- =========================
+             ENVELOPE
+        ========================== -->
+
+        <div
+            class="envelope"
+            id="envelope"
+        >
+
+            <!-- LETTER -->
+
+            <div class="letter">
+
+                <h2>
+                    hi my griddibear 🧸
+                </h2>
+
+                <p>
+                    good luck sa exams mo hehe treat kita after....
+                    pero pag tan aw nimo saimong bag wa na imong wallet :p
+                </p>
+
+                <p>
+                    love u so much ❤️
+                </p>
+
+            </div>
+
+
+            <!-- ENVELOPE BODY -->
+
+            <div class="envelope-body"></div>
+
+
+            <!-- ENVELOPE FLAP -->
+
+            <div class="flap"></div>
+
+
+            <!-- HEART -->
+
+            <div class="heart">
+                ❤️
+            </div>
+
+        </div>
+
+
+        <!-- INSTRUCTION -->
+
+        <p class="instruction">
+            click gud envelope babe bwahaha 💌
+        </p>
+
+
+        <!-- =========================
+             QUESTION
+        ========================== -->
+
+        <div
+            class="question"
+            id="question"
+        >
+
+            <h2>
+                miss ko nimo? nyahaha :p
+            </h2>
+
+
+            <button
+                id="yes"
+                onclick="sayYes()"
+            >
+                yessur ❤️
+            </button>
+
+
+            <button
+                id="no"
+                onclick="moveNo()"
+            >
+                no i hate u
+            </button>
+
+
+            <div id="message"></div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const envelope =
+            document.getElementById("envelope");
+
+        const question =
+            document.getElementById("question");
+
+
+        /* =========================
+           OPEN ENVELOPE
+        ========================= */
+
+        envelope.addEventListener(
+            "click",
+            function() {
+
+                envelope.classList.toggle("open");
+
+
+                if (
+                    envelope.classList.contains("open")
+                ) {
+
+                    setTimeout(
+                        function() {
+
+                            question.style.display =
+                                "block";
+
+                        },
+                        700
+                    );
+
+                }
+
+                else {
+
+                    question.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           YES BUTTON
+        ========================= */
+
+        function sayYes() {
+
+            document.getElementById(
+                "message"
+            ).innerHTML =
+                "hell yeah imnida juseyo! love u baby ❤️";
+
+            createHearts();
+
+        }
+
+
+        /* =========================
+           NO BUTTON
+        ========================= */
+
+        function moveNo() {
+
+            const noButton =
+                document.getElementById("no");
+
+
+            const x =
+                Math.random() * 160 - 80;
+
+
+            const y =
+                Math.random() * 100 - 50;
+
+
+            noButton.style.transform =
+                "translate(" +
+                x +
+                "px, " +
+                y +
+                "px)";
+
+        }
+
+
+        /* =========================
+           FLOATING HEARTS
+        ========================= */
+
+        function createHearts() {
+
+            for (
+                let i = 0;
+                i < 30;
+                i++
+            ) {
+
+                const heart =
+                    document.createElement("div");
+
+
+                heart.className =
+                    "floating-heart";
+
+
+                heart.innerHTML =
+                    "❤️";
+
+
+                heart.style.left =
+                    Math.random() * 100 +
+                    "vw";
+
+
+                heart.style.animationDuration =
+                    (
+                        3 +
+                        Math.random() * 4
+                    ) +
+                    "s";
+
+
+                heart.style.fontSize =
+                    (
+                        15 +
+                        Math.random() * 30
+                    ) +
+                    "px";
+
+
+                document.body.appendChild(
+                    heart
+                );
+
+
+                setTimeout(
+                    function() {
+
+                        heart.remove();
+
+                    },
+                    7000
+                );
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
+```
